@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiwi Studio - Web3 Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { background-color: #020617; color: white; font-family: 'Inter', sans-serif; }
+        .purple-blue-gradient { background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .tab-content { display: none; min-height: calc(100vh - 160px); padding-bottom: 100px; }
+        .active-tab { display: block; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="p-5 flex justify-between items-center bg-slate-950/50 border-b border-white/5 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 purple-blue-gradient rounded-xl flex items-center justify-center font-black text-2xl text-slate-900 shadow-lg">K</div>
+            <div>
+                <h1 class="font-black text-lg tracking-tighter leading-none">KIWI STUDIO</h1>
+                <p class="text-[8px] font-bold text-purple-400 uppercase tracking-widest">Powered by Vercel</p>
+            </div>
+        </div>
+        <div class="flex flex-col items-end">
+            <span id="top-k-balance" class="text-sm font-black text-purple-300">0.00 K</span>
+            <button onclick="connectWallet()" id="btn-connect" class="text-[8px] mt-1 text-slate-400 uppercase font-bold tracking-widest border border-white/10 px-2 py-1 rounded-md">Connect Wallet</button>
+        </div>
+    </header>
+
+    <div class="fixed bottom-24 right-4 z-[100] cursor-pointer hover:scale-110 transition-transform">
+        <div onclick="alert('เจสัน: สวัสดีครับพี่! ผมกำลังเตรียมระบบแชทให้พี่อยู่นะครับ')" class="w-14 h-14 purple-blue-gradient rounded-2xl flex items-center justify-center text-slate-950 shadow-2xl border-4 border-slate-950">
+            <i data-lucide="bot"></i>
+        </div>
+    </div>
+
+    <main class="flex-1 p-4">
+
+        <div id="home-view" class="tab-content active-tab space-y-6">
+            <div class="glass p-8 rounded-[2.5rem] relative overflow-hidden bg-gradient-to-br from-purple-500/10 to-blue-500/10">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">K Token Balance</p>
+                <h2 id="main-k-balance" class="text-5xl font-black tracking-tighter mt-1">0.00</h2>
+                <p class="text-purple-400 font-bold text-sm mt-2">K Tokens Available</p>
+            </div>
+
+            <div class="glass rounded-[2rem] overflow-hidden">
+                <div class="p-4 border-b border-white/5 flex justify-between items-center">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Live K/POL Price</span>
+                    <i data-lucide="trending-up" class="text-green-500" size="14"></i>
+                </div>
+                <iframe width="100%" height="300" src="https://dexscreener.com/polygon/0x465C4eACE8eF06A4308db2e6CcE5D6f99BbB21dc?embed=1&theme=dark&trades=0&info=0" style="border:0;"></iframe>
+            </div>
+        </div>
+
+        <div id="nft-view" class="tab-content space-y-6">
+            <div class="flex justify-between items-end">
+                <h2 class="text-3xl font-black uppercase">Creator</h2>
+                <div class="text-right">
+                    <p class="text-[8px] font-bold text-slate-500 uppercase">Mint Fee (+20% Profit)</p>
+                    <p id="mint-price-display" class="text-sm font-black text-purple-400 animate-pulse">Calculating...</p>
+                </div>
+            </div>
+
+            <div class="glass p-5 rounded-[2rem] space-y-4">
+                <textarea id="ai-prompt" rows="3" class="w-full bg-slate-900/50 rounded-2xl p-4 text-sm outline-none border border-white/5 focus:border-purple-500/30" placeholder="Describe the image you want to create..."></textarea>
+                <button id="btn-mint" onclick="startMintingProcess()" class="w-full py-4 purple-blue-gradient text-slate-900 font-black rounded-2xl shadow-xl active:scale-95 transition-all">
+                    GENERATE & MINT (GASLESS)
+                </button>
+            </div>
+
+            <div id="status-box" class="hidden glass p-4 rounded-xl text-center text-xs font-bold text-purple-400 uppercase tracking-widest">
+                <span id="status-text">Processing...</span>
+            </div>
+        </div>
+
+        <div id="token-view" class="tab-content space-y-6 text-center pt-20">
+            <i data-lucide="lock" class="mx-auto text-slate-700" size="48"></i>
+            <h2 class="text-2xl font-black uppercase">Staking System</h2>
+            <p class="text-slate-500 text-sm">Lock K Token for 1 month<br>Earn 10% APY from Minting Profits</p>
+            <div class="glass p-6 rounded-3xl mt-10">
+                <p class="text-[10px] font-bold text-purple-400 uppercase mb-2">Coming Soon</p>
+                <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div class="w-1/3 h-full purple-blue-gradient"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="wallet-view" class="tab-content space-y-6">
+            <h2 class="text-3xl font-black uppercase">My Assets</h2>
+            <div class="space-y-3" id="asset-list">
+                <div class="glass p-5 rounded-3xl flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400">K</div>
+                        <div><p class="font-black text-sm uppercase">K Token</p><p id="wallet-k-balance" class="text-[10px] text-slate-500">0.00 K</p></div>
+                    </div>
+                </div>
+                <div class="glass p-5 rounded-3xl flex justify-between items-center opacity-50 italic text-[10px]">
+                    No NFTs found in this wallet.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full bg-slate-950/80 backdrop-blur-2xl border-t border-white/5 flex justify-around p-5 z-50">
+        <button onclick="switchTab('home')" class="nav-btn text-purple-400" id="nav-home"><i data-lucide="layout-grid"></i></button>
+        <button onclick="switchTab('nft')" class="nav-btn text-slate-500" id="nav-nft"><i data-lucide="sparkles"></i></button>
+        <button onclick="switchTab('token')" class="nav-btn text-slate-500" id="nav-token"><i data-lucide="layers"></i></button>
+        <button onclick="switchTab('wallet')" class="nav-btn text-slate-500" id="nav-wallet"><i data-lucide="wallet"></i></button>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+
+        // CONFIGURATION (ดึงจาก Environment Variables ใน Vercel ผ่าน API หรือใส่ตรงนี้กรณีทดสอบ)
+        const K_TOKEN_ADDR = "0x465C4eACE8eF06A4308db2e6CcE5D6f99BbB21dc";
+        let userAddress = "";
+        let currentPriceInK = 15;
+
+        // 1. CONNECT WALLET
+        async function connectWallet() {
+            if (!window.ethereum) return alert("Please install MetaMask");
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const accounts = await provider.send("eth_requestAccounts", []);
+            userAddress = accounts[0];
+            document.getElementById('btn-connect').innerText = userAddress.substring(0,6) + "...";
+            updateBalances();
+        }
+
+        // 2. UPDATE BALANCES
+        async function updateBalances() {
+            if(!userAddress) return;
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const kAbi = ["function balanceOf(address) view returns (uint256)"];
+            const kContract = new ethers.Contract(K_TOKEN_ADDR, kAbi, provider);
+            const balance = await kContract.balanceOf(userAddress);
+            const formatted = ethers.utils.formatEther(balance);
+
+            document.getElementById('top-k-balance').innerText = parseFloat(formatted).toFixed(2) + " K";
+            document.getElementById('main-k-balance').innerText = parseFloat(formatted).toFixed(2);
+            document.getElementById('wallet-k-balance').innerText = parseFloat(formatted).toFixed(2) + " K";
+        }
+
+        // 3. DYNAMIC PRICING (Gas + AI + 20%)
+        async function updatePrice() {
+            try {
+                const resK = await fetch(`https://api.dexscreener.com/latest/dex/pairs/polygon/${K_TOKEN_ADDR}`);
+                const dataK = await resK.json();
+                const priceK = parseFloat(dataK.pair.priceUsd);
+
+                const resPol = await fetch("https://api.dexscreener.com/latest/dex/pairs/polygon/0x6e7f5C6ED96abAb3b5d0030E95b00aC932474843");
+                const dataPol = await resPol.json();
+                const pricePol = parseFloat(dataPol.pair.priceUsd);
+
+                const costUsd = (0.03 * pricePol) + 0.01; // Gas 0.03 POL + AI $0.01
+                currentPriceInK = (costUsd / priceK) * 1.20;
+                document.getElementById('mint-price-display').innerText = currentPriceInK.toFixed(2) + " K Tokens";
+            } catch (e) { console.log("Price Error"); }
+        }
+        setInterval(updatePrice, 30000);
+        updatePrice();
+
+        // 4. THE MINTING PROCESS (Vercel Integration)
+        async function startMintingProcess() {
+            if(!userAddress) return alert("Please connect wallet first");
+            const prompt = document.getElementById('ai-prompt').value;
+            if(!prompt) return alert("Please enter a prompt");
+
+            const statusBox = document.getElementById('status-box');
+            const statusText = document.getElementById('status-text');
+            statusBox.classList.remove('hidden');
+
+            try {
+                // STEP A: Approve K Token (ให้ User อนุญาตให้สัญญา NFT หักเหรียญ)
+                statusText.innerText = "Step 1: Approving K Tokens...";
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const kAbi = ["function approve(address spender, uint256 amount) public returns (bool)"];
+                const kContract = new ethers.Contract(K_TOKEN_ADDR, kAbi, signer);
+
+                // ดึงเลขสัญญา NFT จาก Vercel หรือระบุตรงนี้
+                const nftAddr = "0x7Ff2564490E611Dd980E15BfB9a35ab4fcf7a150";
+                const amount = ethers.utils.parseEther(currentPriceInK.toFixed(4));
+                const txApprove = await kContract.approve(nftAddr, amount);
+                await txApprove.wait();
+
+                // STEP B: Call Vercel API (ส่งไปให้ Vercel จ่าย Gas และ Mint)
+                statusText.innerText = "Step 2: Generating AI Art & Minting (Paying Gas for you)...";
+                const response = await fetch('/api/mint', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userAddress: userAddress,
+                        imageUri: "ipfs://Qm... (ตัวอย่าง ลิงก์รูปจริงจะมาจาก AI)",
+                        amountInK: amount.toString()
+                    })
+                });
+
+                const result = await response.json();
+                if(result.success) {
+                    statusText.innerText = "Success! NFT Minted.";
+                    alert("ยินดีด้วยครับ! Mint สำเร็จแล้ว (ระบบจ่าย Gas ให้พี่เรียบร้อย)");
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (err) {
+                alert("Error: " + err.message);
+                statusBox.classList.add('hidden');
+            }
+        }
+
+        // NAVIGATION LOGIC
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.replace('text-purple-400', 'text-slate-500'));
+            document.getElementById(id + '-view').classList.add('active-tab');
+            document.getElementById('nav-' + id).classList.replace('text-slate-500', 'text-purple-400');
+        }
+    </script>
+</body>
+</html>
