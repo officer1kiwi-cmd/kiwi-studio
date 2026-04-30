@@ -457,6 +457,16 @@
                 res = "แอปนี้มี 4 ส่วนหลักครับ: NFT (ชมคอลเลกชัน), K Token (เช็คราคาและเทรด), Games (เล่นเกมสะสมแต้ม), และ Wallet (จัดการกระเป๋าเงินของคุณ) ครับ";
             }
 
+	// ข้อมูลเกม
+            else if(msg.includes("Game") || msg.includes("Prophet") || msg.includes("Kiwi Game")) {
+                res = "Kiwi Prophet รูปแบบ DEX-Driven Kiwi Game บน Polygon ทุกการขยับของราคาคือความท้าทายในเกม มีเมนูฝากและถอนเหรียญในเกมได้ รักษา Level คุณไม่ให้ต่ำกว่า 5 คุณจะได้รับรางวัลทุกวัน";
+            }
+
+	// ข้อมูลสื่อโซเชียลมีเดีย
+            else if(msg.includes("Facebook") || msg.includes("Social") || msg.includes("toktok")) {
+                res = "เรามีสื่อ Social Media หลายช่องทางเพื่อเชื่อมโยงผู้คนกับชุมชนของเรา แกลอรี่ของเรา เกมของเรา เพื่อให้เกิดการใช้งาน K Token อย่างต่อเนื่องและยั่งยืนต่อไป";
+            }
+
             content.innerHTML += `<div><b>Jason:</b> ${res}</div>`;
             content.scrollTop = content.scrollHeight;
         }, 800);
