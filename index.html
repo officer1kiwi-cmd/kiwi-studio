@@ -119,7 +119,7 @@
         }
 
         .card-btn {
-            background: var(--card-bg);
+            background: var(--card-#bk);
             border: 1px solid #222;
             border-radius: 20px;
             padding: 18px;
@@ -468,6 +468,11 @@
                 res = "เรามีสื่อ Social Media หลายช่องทางเพื่อเชื่อมโยงผู้คนกับชุมชนของเรา แกลอรี่ของเรา เกมของเรา เพื่อให้เกิดการใช้งาน K Token อย่างต่อเนื่องและยั่งยืนต่อไป";
             }
 
+	// ข้อมูล Staking
+            else if(msg.includes("Staking") || msg.includes("ฝาก") || msg.includes("อย่างไร")) {
+                res = "เพียงท่าน Login เข้าระบบด้วย polygon wallet และโอน K Token ที่ท่านมีไปยัง Admin Wallet ด้านบน และใส่ Transaction Hash และจำนวน K ที่ท่านฝากแล้วกด SUBMIT รอการอนุมัติ ไม่เกิน 24 ชั่วโมง เมื่อได้รับการอนุมัติแล้ว Profit ท่านจะวิ่งทุกวินาที สามารถส่งคำสั่งถอนได้หลังจากครบ 30 วัน";
+            }
+			
             content.innerHTML += `<div><b>Jason:</b> ${res}</div>`;
             content.scrollTop = content.scrollHeight;
         }, 800);
