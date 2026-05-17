@@ -8,16 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #050505;
-            --card-bg: rgba(57, 255, 20, 0.05);
-            --neon-green: #39FF14;
-            --text-main: #ffffff;
-            --text-dim: #777777;
+            --bg-dark: #090214; /* ปรับพื้นหลังเป็นม่วงเข้มลึก */
+            --card-bg: rgba(123, 44, 191, 0.08); /* กล่องเมนโทนม่วงเข้มโปร่งแสง */
+            --purple-accent: #C77DFF; /* ม่วงนีออนสว่างสำหรับเน้นไอคอนและจุดเด่น */
+            --purple-glow: #7B2CBF; /* ม่วงสำหรับเอฟเฟกต์เรืองแสง */
+            --text-main: #E0AAFF; /* ปรับตัวหนังสือหลักเป็นโทนม่วงลาเวนเดอร์อ่อน */
+            --text-dim: #9D4EDD; /* ตัวหนังสือรองโทนม่วงเข้มขึ้นมา */
         }
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background-color: #000;
+            background-color: #030006; /* พื้นหลังจอนอกโทนม่วงมืด */
             margin: 0;
             display: flex;
             justify-content: center;
@@ -32,10 +33,10 @@
             height: 812px;
             background-color: var(--bg-dark);
             border-radius: 45px;
-            box-shadow: 0 0 40px rgba(57, 255, 20, 0.2);
+            box-shadow: 0 0 45px rgba(123, 44, 191, 0.35); /* เรืองแสงออร่าม่วงเข้ม */
             position: relative;
             overflow: hidden;
-            border: 10px solid #1a1a1a;
+            border: 10px solid #140526; /* ขอบมือถือโทนม่วงมืด */
         }
 
         /* Header & Animated Logo */
@@ -48,7 +49,7 @@
             width: 60px;
             height: 60px;
             background: transparent;
-            color: var(--neon-green);
+            color: var(--purple-accent);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -56,22 +57,24 @@
             font-weight: bold;
             margin: 0 auto;
             border-radius: 12px;
-            border: 2px solid var(--neon-green);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+            border: 2px solid var(--purple-accent);
+            box-shadow: 0 0 15px rgba(123, 44, 191, 0.5);
             animation: pulse 2.5s ease-in-out infinite;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 25px var(--neon-green); }
+            50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 25px var(--purple-glow); }
         }
 
         .studio-title {
             font-family: 'Pacifico', cursive;
             font-size: 24px;
-            color: var(--neon-green);
+            background: linear-gradient(135deg, #F3E8FF, #9D4EDD); /* ไล่เฉดม่วงสว่างลงไปม่วงเข้ม */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin: 8px 0;
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+            filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.4));
         }
 
         /* Social Icons */
@@ -86,31 +89,47 @@
             color: var(--text-main);
             font-size: 18px;
             transition: 0.3s;
-            opacity: 0.5;
+            opacity: 0.6;
         }
 
-        .social-links a:hover { opacity: 1; color: var(--neon-green); transform: translateY(-3px); }
+        .social-links a:hover { 
+            opacity: 1;
+            color: var(--purple-accent); 
+            transform: translateY(-3px); 
+        }
 
         /* Price Display (Live API) */
         .price-now {
             text-align: center;
             margin-bottom: 20px;
             padding: 10px;
-            background: rgba(57, 255, 20, 0.05);
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.12), rgba(60, 9, 108, 0.2)); /* ไล่เฉดกล่องราคาแบบม่วงเข้ม */
             border-radius: 15px;
+            border: 1px solid rgba(199, 125, 255, 0.15);
         }
 
-        .price-label { font-size: 10px; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        .price-label { font-size: 10px; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; opacity: 0.8; }
+        
         .price-value { 
-            font-size: 36px; 
+            font-size: 36px;
             font-weight: bold; 
-            color: var(--neon-green); 
-            text-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+            color: var(--purple-accent); 
+            text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
         }
-        .loading-dots:after { content: '...'; animation: dots 1.5s steps(5, end) infinite;}
-        @keyframes dots { 0%, 20% { color: rgba(0,0,0,0); text-shadow: .2em 0 0 rgba(0,0,0,0), .4em 0 0 rgba(0,0,0,0); } 40% { color: var(--neon-green); text-shadow: .2em 0 0 rgba(0,0,0,0), .4em 0 0 rgba(0,0,0,0); } 60% { text-shadow: .2em 0 var(--neon-green), .4em 0 0 rgba(0,0,0,0); } 80%, 100% { text-shadow: .2em 0 var(--neon-green), .4em 0 var(--neon-green); } }
+        
+        .loading-dots:after { 
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        
+        @keyframes dots { 
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .2em 0 0 rgba(0,0,0,0), .4em 0 0 rgba(0,0,0,0); } 
+            40% { color: var(--purple-accent); text-shadow: .2em 0 0 rgba(0,0,0,0), .4em 0 0 rgba(0,0,0,0); } 
+            60% { text-shadow: .2em 0 var(--purple-accent), .4em 0 0 rgba(0,0,0,0); } 
+            80%, 100% { text-shadow: .2em 0 var(--purple-accent), .4em 0 var(--purple-accent); } 
+        }
 
-        /* Main Menu Buttons */
+        /* Main Menu Buttons with Floating & Wiggle effects */
         .grid-menu {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -118,14 +137,14 @@
             padding: 0 20px;
         }
 		
-		.card-btn {
+        .card-btn {
             background: var(--card-bg);
-            border: 1px solid #222;
+            border: 1px solid rgba(123, 44, 191, 0.25); /* ขอบกล่องโทนม่วงจางๆ */
             border-radius: 20px;
             padding: 18px;
             text-align: center;
             cursor: pointer;
-            transition: 0.3s;
+            transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -133,12 +152,36 @@
             text-decoration: none;
         }
 
-        .card-btn:hover { 
-            border-color: var(--neon-green); 
-            background: rgba(57, 255, 20, 0.05);
+        /* ขยับขึ้นลงแบบเยื้องจังหวะต่อเนื่อง (เหมือนเดิม) */
+        .grid-menu .card-btn:nth-child(1) { animation: float-slow 4s ease-in-out infinite; }
+        .grid-menu .card-btn:nth-child(2) { animation: float-slow 4s ease-in-out infinite 0.5s; }
+        .grid-menu .card-btn:nth-child(3) { animation: float-slow 4s ease-in-out infinite 1s; }
+        .grid-menu .card-btn:nth-child(4) { animation: float-slow 4s ease-in-out infinite 1.5s; }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
-        .card-btn i { font-size: 24px; color: var(--neon-green); }
+        .card-btn:hover { 
+            border-color: var(--purple-accent);
+            background: rgba(157, 78, 221, 0.15);
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3);
+        }
+
+        /* ลูกเล่นดิ้นดุ๊กดิ๊กสปริงตัวเมื่อกด (เหมือนเดิม) */
+        .card-btn:active {
+            animation: click-wiggle 0.35s ease-in-out !important;
+        }
+
+        @keyframes click-wiggle {
+            0% { transform: scale(1); }
+            25% { transform: scale(0.92) rotate(-4deg); }
+            60% { transform: scale(1.06) rotate(4deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .card-btn i { font-size: 24px; color: var(--purple-accent); }
         .card-btn span { font-weight: 700; color: var(--text-main); font-size: 13px; }
           
         /* Graph Area */
@@ -148,7 +191,7 @@
             border-radius: 25px;
             height: 180px;
             overflow: hidden;
-            border: 1px solid #1a1a1a;
+            border: 1px solid #190a2b; /* ขอบม่วงมืด */
         }
 
         /* Jason Bot Floating */
@@ -156,17 +199,17 @@
             position: absolute;
             width: 36px;
             height: 36px;
-            background: var(--neon-green);
+            background: var(--purple-accent);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #000;
+            color: #030006;
             cursor: pointer;
             z-index: 999;
             bottom: 100px;
             right: 20px;
-            box-shadow: 0 0 15px var(--neon-green);
+            box-shadow: 0 0 15px var(--purple-accent);
         }
 
         .chat-box {
@@ -174,19 +217,28 @@
             bottom: 160px;
             right: 20px;
             width: 280px;
-            background: #111;
+            background: #0d051a; /* พื้นหลังแชทม่วงมืด */
             border-radius: 20px;
             display: none;
             flex-direction: column;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
             z-index: 1000;
-            border: 1px solid var(--neon-green);
+            border: 1px solid var(--purple-accent);
         }
 
-        .chat-head { background: var(--neon-green); color: #000; padding: 12px; border-radius: 20px 20px 0 0; font-weight: bold; font-size: 14px; }
-        .chat-msgs { height: 160px; padding: 15px; overflow-y: auto; font-size: 12px; line-height: 1.4; color: #eee; }
-        .chat-in { display: flex; padding: 10px; border-top: 1px solid #222; }
+        .chat-head { 
+            background: var(--purple-accent); 
+            color: #030006;
+            padding: 12px; 
+            border-radius: 20px 20px 0 0; 
+            font-weight: bold; 
+            font-size: 14px;
+        }
+        
+        .chat-msgs { height: 160px; padding: 15px; overflow-y: auto; font-size: 12px; line-height: 1.4; color: var(--text-main); }
+        .chat-in { display: flex; padding: 10px; border-top: 1px solid #1f0b3a; }
         .chat-in input { border: none; flex: 1; outline: none; background: transparent; color: #fff; }
+        .chat-in input::placeholder { color: var(--text-dim); opacity: 0.6; }
 
         /* Overlays (Pages) */
         .page-overlay {
@@ -200,15 +252,25 @@
             box-sizing: border-box;
         }
 
-        .back-btn { font-size: 22px; cursor: pointer; color: var(--neon-green); margin-bottom: 25px; }
-        .overlay-title { font-family: 'Pacifico', cursive; color: var(--neon-green); text-align: center; margin-bottom: 30px; font-size: 28px; }
+        .back-btn { font-size: 22px; cursor: pointer; color: var(--purple-accent); margin-bottom: 25px; }
+        
+        .overlay-title { 
+            font-family: 'Pacifico', cursive; 
+            background: linear-gradient(135deg, #F3E8FF, #9D4EDD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center; 
+            margin-bottom: 30px;
+            font-size: 28px; 
+            filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.4));
+        }
 
         .list-menu { list-style: none; padding: 0; }
         .list-menu li {
             background: var(--card-bg);
             margin-bottom: 12px;
             border-radius: 15px;
-            border: 1px solid #222;
+            border: 1px solid rgba(123, 44, 191, 0.2);
         }
         .list-menu li a {
             padding: 20px;
@@ -218,16 +280,19 @@
             font-weight: bold;
             text-align: center;
         }
-        .list-menu li:hover { border-color: var(--neon-green); }
+        .list-menu li:hover { border-color: var(--purple-accent); background: rgba(157, 78, 221, 0.12); }
 
         /* Placeholder for NFT */
         .art-item {
-            width: 100%; height: 130px;
-            background: #111; border-radius: 20px;
+            width: 100%;
+            height: 130px;
+            background: #05010d; 
+            border-radius: 20px;
             display: flex; justify-content: center; align-items: center;
             font-family: 'Pacifico', cursive; font-size: 32px;
-            color: var(--neon-green); margin-bottom: 15px;
-            border: 1px dashed var(--neon-green);
+            color: var(--purple-accent);
+            margin-bottom: 15px;
+            border: 1px dashed var(--purple-accent);
             text-decoration: none;
         }
 
@@ -235,15 +300,16 @@
         .tab-bar {
             position: absolute;
             bottom: 0; width: 100%; height: 80px;
-            background: #080808;
+            background: #05010a; /* แถบล่างม่วงมืดพิเศษ */
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid #1a1a1a;
+            border-top: 1px solid #190a2b;
             padding-bottom: 10px;
         }
+        
         .tab-item { 
-            color: var(--text-dim); 
+            color: var(--text-dim);
             font-size: 18px; 
             cursor: pointer; 
             display: flex;
@@ -252,8 +318,9 @@
             gap: 4px;
             transition: 0.3s;
         }
+        
         .tab-item span { font-size: 9px; font-weight: bold; text-transform: uppercase; }
-        .tab-item.active { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
+        .tab-item.active { color: var(--purple-accent); text-shadow: 0 0 10px var(--purple-glow); }
 
     </style>
 </head>
@@ -266,14 +333,14 @@
         
         <div class="social-links">
             <a href="https://www.facebook.com/officer1.kiwi/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-			<a href="https://x.com/KiwiOfficer1" target="_blank"><i class="fa-brands fa-x"></i></a>
+            <a href="https://x.com/KiwiOfficer1" target="_blank"><i class="fa-brands fa-x"></i></a>
             <a href="https://www.youtube.com/@Kiwi-officer" target="_blank"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://discord.gg/gGGZhcd8" target="_blank"><i class="fa-brands fa-discord"></i></a>
             <a href="https://www.tiktok.com/@kiwi06268" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-			<a href="https://sites.google.com/view/kiwi-studio" target="_blank"><i class="fa-brands fa-google"></i></a>
+            <a href="https://sites.google.com/view/kiwi-studio" target="_blank"><i class="fa-brands fa-google"></i></a>
         </div>
         
-		<div class="price-now">
+        <div class="price-now">
             <div class="price-label">Market Price K Token</div>
             <div class="price-value" id="k-price"><span class="loading-dots"></span></div>
         </div>
@@ -317,15 +384,15 @@
         </div>
         <div class="chat-in">
             <input type="text" id="user-msg" placeholder="พิมพ์ข้อความคุยกับ Jason...">
-            <button onclick="askJason()" style="border:none; background:none; color:var(--neon-green); font-weight:bold; cursor:pointer;">ส่ง</button>
+            <button onclick="askJason()" style="border:none; background:none; color:var(--purple-accent); font-weight:bold; cursor:pointer;">ส่ง</button>
         </div>
     </div>
 
     <div id="nft-page" class="page-overlay">
         <i class="fa-solid fa-arrow-left back-btn" onclick="closePage('nft-page')"></i>
         <h2 class="overlay-title">NFT Collection</h2>
-        <a href="https://opensea.io/Kiwi_studio" target="_blank" class="art-item"style="border-color: #fff; color: #fff;">Kiwi</a>
-        <a href="https://opensea.io/K-so-polygon" target="_blank" class="art-item" style="border-color: #fff; color: #fff;">K-so</a>
+        <a href="https://opensea.io/Kiwi_studio" target="_blank" class="art-item" style="border-color: var(--text-main); color: var(--text-main);">Kiwi</a>
+        <a href="https://opensea.io/K-so-polygon" target="_blank" class="art-item" style="border-color: var(--text-main); color: var(--text-main);">K-so</a>
     </div>
 
     <div id="ktoken-page" class="page-overlay">
@@ -338,22 +405,20 @@
         </ul>
     </div>
 
-	<div id="games-page" class="page-overlay">
+    <div id="games-page" class="page-overlay">
         <i class="fa-solid fa-arrow-left back-btn" onclick="closePage('games-page')"></i>
         <h2 class="overlay-title">Games</h2>
-        <a href="https://sites.google.com/view/freektoken" target="_blank" class="art-item"style="border-color: #fff; color: #fff;">Free K Token</a>
-		<a href="https://kiwi-game.vercel.app/" target="_blank" class="art-item"style="border-color: #fff; color: #fff;">Kiwi Game</a>
-		<!--Start rollercoin.com code-->
-						<a href="https://rollercoin.com/?r=kvmhxhqo">
-							<img src="https://static.rollercoin.com/static/img/ref/gen2/w320h320.gif" alt="320h320"/>
-						</a>
-						<!--End rollercoin.com code-->
-    </div>
+        <a href="https://sites.google.com/view/freektoken" target="_blank" class="art-item" style="border-color: var(--text-main); color: var(--text-main);">Free K Token</a>
+        <a href="https://kiwi-game.vercel.app/" target="_blank" class="art-item" style="border-color: var(--text-main); color: var(--text-main);">Kiwi Game</a>
+        <a href="https://rollercoin.com/?r=kvmhxhqo" style="display: block; text-align: center; margin-top: 10px;">
+            <img src="https://static.rollercoin.com/static/img/ref/gen2/w320h320.gif" alt="320h320" style="max-width: 100%; border-radius: 15px; border: 1px solid var(--purple-glow);"/>
+        </a>
+        </div>
 	
     <div id="wallet-page" class="page-overlay">
         <i class="fa-solid fa-arrow-left back-btn" onclick="closePage('wallet-page')"></i>
         <h2 class="overlay-title">Wallets</h2>
-        <p style="font-size:11px; text-align:center; color:var(--neon-green); margin-bottom:20px;">Contract Polygon Chain: 0x465C4eACE8eF06A4308db2e6CcE5D6f99BbB21dc</p>
+        <p style="font-size:11px; text-align:center; color:var(--purple-accent); margin-bottom:20px;">Contract Polygon Chain: 0x465C4eACE8eF06A4308db2e6CcE5D6f99BbB21dc</p>
         <ul class="list-menu">
             <li><a href="https://metamask.io/" target="_blank"><i class="fa-solid fa-circle-check"></i> MetaMask</a></li>
             <li><a href="https://trustwallet.com/" target="_blank"><i class="fa-solid fa-shield"></i> Trust Wallet</a></li>
@@ -402,7 +467,7 @@
     }
 
     function closePage(id) { 
-        document.getElementById(id).style.display = 'none'; 
+        document.getElementById(id).style.display = 'none';
         document.querySelectorAll('.tab-item')[0].classList.add('active');
     }
 
@@ -419,7 +484,7 @@
     bot.addEventListener('click', () => {
         chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
     });
-
+    
     function askJason() {
         const input = document.getElementById("user-msg");
         const content = document.getElementById("chat-content");
@@ -428,13 +493,13 @@
 
         content.innerHTML += `<div><b>คุณ:</b> ${input.value}</div>`;
         input.value = "";
-
-       setTimeout(() => {
+        setTimeout(() => {
             let res = "ยินดีให้บริการครับ ผมชำนาญเรื่อง K Token และ NFT ของ Kiwi Studio ครับ คุณสามารถดูข้อมูลเพิ่มเติมได้ที่เว็บไซต์หลักของเราครับ";
             
             // ข้อมูลการใช้งาน & API
             if(msg.includes("api")) {
                 res = "ต้องขออภัยอย่างยิ่งครับ ผมไม่ได้รับอนุญาตให้ตอบคำถามที่เกี่ยวข้องกับ API ครับ";
+            
             } else if(msg.includes("สวัสดี") || msg.includes("hi") || msg.includes("hello")) {
                 res = "สวัสดีครับ! ผม Jason ยินดีต้อนรับเข้าสู่ Kiwi Studio ล้ำสมัยครับ มีอะไรให้ช่วยไหมครับ?";
             }
@@ -458,24 +523,24 @@
                 res = "แอปนี้มี 4 ส่วนหลักครับ: NFT (ชมคอลเลกชัน), K Token (เช็คราคาและเทรด), Games (เล่นเกมสะสมแต้ม), และ Wallet (จัดการกระเป๋าเงินของคุณ) ครับ";
             }
 
-	// ข้อมูลเกม
-            else if(msg.includes("Game") || msg.includes("เกม") || msg.includes("Level")) {
+            // ข้อมูลเกม
+            else if(msg.includes("game") || msg.includes("เกม") || msg.includes("level")) {
                 res = "Kiwi Prophet รูปแบบ DEX-Driven Kiwi Game บน Polygon ทุกการขยับของราคาคือความท้าทายในเกม มีเมนูฝากและถอนเหรียญในเกมได้ รักษา Level คุณไม่ให้ต่ำกว่า 5 คุณจะได้รับรางวัลทุกวัน";
             }
 
-	// ข้อมูลสื่อโซเชียลมีเดีย
+            // ข้อมูลสื่อโซเชียลมีเดีย
             else if(msg.includes("ช่องทาง") || msg.includes("x") || msg.includes("toktok")) {
                 res = "เรามีสื่อ Social Media หลายช่องทางเพื่อเชื่อมโยงผู้คนกับชุมชนของเรา แกลอรี่ของเรา เกมของเรา เพื่อให้เกิดการใช้งาน K Token อย่างต่อเนื่องและยั่งยืนต่อไป";
             }
 
-	// ข้อมูล Staking
-            else if(msg.includes("Staking") || msg.includes("ฝาก") || msg.includes("อย่างไร")) {
+            // ข้อมูล Staking
+            else if(msg.includes("staking") || msg.includes("ฝาก") || msg.includes("อย่างไร")) {
                 res = "เพียงท่าน Login เข้าระบบด้วย polygon wallet และโอน K Token ที่ท่านมีไปยัง Admin Wallet ด้านบน และใส่ Transaction Hash และจำนวน K ที่ท่านฝากแล้วกด SUBMIT รอการอนุมัติ ไม่เกิน 24 ชั่วโมง เมื่อได้รับการอนุมัติแล้ว Profit ท่านจะวิ่งทุกวินาที สามารถส่งคำสั่งถอนได้หลังจากครบ 30 วัน";
             }
 			
             content.innerHTML += `<div><b>Jason:</b> ${res}</div>`;
             content.scrollTop = content.scrollHeight;
-        }, 800);
+        } , 800);
     }
 </script>
 
